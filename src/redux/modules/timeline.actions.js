@@ -8,6 +8,7 @@ import moment from 'moment';
 export const TIMELINE_ADD_EVENT = 'TIMELINE_ADD_EVENT';
 export const TIMELINE_ADD_GROUP = 'TIMELINE_ADD_GROUP';
 export const TIMELINE_SHIFT_NEXT_WEEK = 'TIMELINE_SHIFT_NEXT_WEEK';
+export const TIMELINE_SHIFT_PREVIOUS_WEEK = 'TIMELINE_SHIFT_PREVIOUS_WEEK';
 
 let makeFakeGroup = (index) => {
   let today = new Date();
@@ -61,11 +62,12 @@ function addDays (date, days) {
 export const addTimeline = createAction(TIMELINE_ADD_EVENT);
 export const addGroup = createAction(TIMELINE_ADD_GROUP);
 export const shiftForward = createAction(TIMELINE_SHIFT_NEXT_WEEK);
-
+export const shiftBackward = createAction(TIMELINE_SHIFT_PREVIOUS_WEEK);
 export const mapSettingsActions = {
   addTimeline,
   addGroup,
-  shiftForward
+  shiftForward,
+  shiftBackward
 };
 
 var actionHandlers = {
@@ -87,6 +89,15 @@ var actionHandlers = {
     let newState = {};
     let begindate = moment(state.bookendsFinish).add(1, 'day').startOf('day');
     let enddate = moment(state.bookendsFinish).add(7, 'day').endOf('day');
+    newState.bookendsBeginning = begindate.toDate();
+    newState.bookendsFinish = enddate.toDate();
+    let finalState = Object.assign({}, state, newState);
+    return finalState;
+  },
+  [TIMELINE_SHIFT_PREVIOUS_WEEK]: (state, {payload}) => {
+    let newState = {};
+    let begindate = moment(state.bookendsBeginning).add(-7, 'day').startOf('day');
+    let enddate = moment(state.bookendsBeginning).add(-1, 'day').endOf('day');
     newState.bookendsBeginning = begindate.toDate();
     newState.bookendsFinish = enddate.toDate();
     let finalState = Object.assign({}, state, newState);

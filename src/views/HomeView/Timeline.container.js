@@ -2,10 +2,9 @@
 /*eslint react/jsx-no-bind: 0*/
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { addTimeline, shiftForward } from '../../redux/modules/timeline.actions';
+import { addTimeline, shiftForward, shiftBackward } from '../../redux/modules/timeline.actions';
 import {default as ReactCalendarTimeline} from 'react-calendar-timeline';
-console.log(ReactCalendarTimeline);
-import '../../styles/timeline-styles.scss';
+import moment from 'moment';
 // import moment from 'moment';
 // import DuckImage from './Duck.jpg';
 // import classes from './HomeView.scss';
@@ -22,7 +21,6 @@ type Props = {
   doubleAsync: Function,
   increment: Function
 };
-/*eslint react/jsx-no-bind: 0*/
 
 // We avoid using the `@connect` decorator on the class definition so
 // that we can export the undecorated component for testing.
@@ -31,7 +29,10 @@ export class TimelineContainer extends React.Component<void, Props, void> {
   static propTypes = {
     timeline: PropTypes.object.isRequired,
     addTimeline: PropTypes.func.isRequired,
-    shiftForward: PropTypes.func.isRequired
+    shiftForward: PropTypes.func.isRequired,
+    shiftBackward: PropTypes.func.isRequired,
+    bookendsBeginning: PropTypes.object.isRequired,
+    bookendsFinish: PropTypes.object.isRequired
   };
 
   onAddEvent (e) {
@@ -53,9 +54,28 @@ export class TimelineContainer extends React.Component<void, Props, void> {
   };
 
   onNextWeek (e) {
-    console.log(e);
     this.props.shiftForward();
-  }
+  };
+
+  onPreviousWeek (e) {
+    this.props.shiftBackward();
+  };
+
+  onTimeChange (visibleTimeStart, visibleTimeEnd) {
+    debugger;
+    var minTime = moment().add(-6, 'months').valueOf();
+    var maxTime = moment().add(6, 'months').valueOf();
+
+    if (visibleTimeStart < minTime && visibleTimeEnd > maxTime) {
+      this.updateScrollCanvas(minTime, maxTime);
+    } else if (visibleTimeStart < minTime) {
+      this.updateScrollCanvas(minTime, minTime + (visibleTimeEnd - visibleTimeStart));
+    } else if (visibleTimeEnd > maxTime) {
+      this.updateScrollCanvas(maxTime - (visibleTimeEnd - visibleTimeStart), maxTime);
+    } else {
+      this.updateScrollCanvas(visibleTimeStart, visibleTimeEnd);
+    }
+  };
 
   render () {
     let ourKeys = {
@@ -68,21 +88,22 @@ export class TimelineContainer extends React.Component<void, Props, void> {
       itemTimeEndKey: 'end'
     };
 
-    console.log('view starts on ', this.props.timeline.bookendsBeginning);
-    console.log('view ends on ', this.props.timeline.bookendsFinish);
+    console.log('view starts on ', this.props.timeline.bookendsBeginning.valueOf());
+    console.log('view ends on ', this.props.timeline.bookendsFinish.valueOf());
     return (
-      <div className='container text-center'>
+      <div>
         <ReactCalendarTimeline
           groups={this.props.timeline.eventGroups}
           items={this.props.timeline.events}
           fixedHeader='fixed'
           keys={ourKeys}
-          defaultTimeStart={this.props.timeline.bookendsBeginning}
-          defaultTimeEnd={this.props.timeline.bookendsFinish}
+          visibleTimeStart={this.props.timeline.bookendsBeginning.valueOf()}
+          visibleTimeEnd={this.props.timeline.bookendsFinish.valueOf()}
+          onTimeChange={this.onTimeChange}
         />
 
         <button onClick={(e) => this.onAddEvent(e)}>Drop 1 Dragon</button>
-        <button>Last Week</button>
+        <button onClick={(e) => this.onPreviousWeek(e)}>Last Week</button>
         <button onClick={(e) => this.onNextWeek(e)}>Next Week</button>
       </div>
     );
@@ -90,10 +111,13 @@ export class TimelineContainer extends React.Component<void, Props, void> {
 }
 
 const mapStateToProps = (state) => ({
-  timeline: state.timeline
+  timeline: state.timeline,
+  bookendsBeginning: state.timeline.bookendsBeginning,
+  bookendsFinish: state.timeline.bookendsFinish
 });
 
 export default connect((mapStateToProps), {
   addTimeline: (payload) => addTimeline(payload),
-  shiftForward: () => shiftForward()
+  shiftForward: () => shiftForward(),
+  shiftBackward: () => shiftBackward()
 })(TimelineContainer);
