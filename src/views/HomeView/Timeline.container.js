@@ -20,6 +20,7 @@ type Props = {
   doubleAsync: Function,
   increment: Function
 };
+/*eslint react/jsx-no-bind: 0*/
 
 // We avoid using the `@connect` decorator on the class definition so
 // that we can export the undecorated component for testing.
