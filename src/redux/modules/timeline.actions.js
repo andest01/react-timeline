@@ -71,7 +71,6 @@ export const mapSettingsActions = {
 var actionHandlers = {
   [TIMELINE_ADD_EVENT]: (state, { payload }) => {
     let newState = {};
-    debugger;
     let { start, end, name, groupId, id } = payload;
     let newItem = {start, end, name, groupId, id};
     let newItems = state.events.concat(newItem);
@@ -86,6 +85,10 @@ var actionHandlers = {
   },
   [TIMELINE_SHIFT_NEXT_WEEK]: (state, { payload }) => {
     let newState = {};
+    let begindate = moment(state.bookendsFinish).add(1, 'day').startOf('day');
+    let enddate = moment(state.bookendsFinish).add(7, 'day').endOf('day');
+    newState.bookendsBeginning = begindate.toDate();
+    newState.bookendsFinish = enddate.toDate();
     let finalState = Object.assign({}, state, newState);
     return finalState;
   }

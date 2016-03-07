@@ -1,9 +1,10 @@
 /* @flow */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { addTimeline } from '../../redux/modules/timeline.actions';
+import { addTimeline, shiftForward } from '../../redux/modules/timeline.actions';
 import {default as ReactCalendarTimeline} from 'react-calendar-timeline';
 console.log(ReactCalendarTimeline);
+// import moment from 'moment';
 // import DuckImage from './Duck.jpg';
 // import classes from './HomeView.scss';
 
@@ -24,7 +25,6 @@ type Props = {
 // that we can export the undecorated component for testing.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 export class TimelineContainer extends React.Component<void, Props, void> {
-  
   static propTypes = {
     timeline: PropTypes.object.isRequired,
     addTimeline: PropTypes.func.isRequired,
@@ -46,13 +46,12 @@ export class TimelineContainer extends React.Component<void, Props, void> {
       id: Math.floor(Math.random() * 100000000)
     };
 
-    debugger;
     this.props.addTimeline(newEvent);
   };
 
   onNextWeek (e) {
+    console.log(e);
     this.props.shiftForward();
-
   }
 
   render () {
@@ -66,16 +65,22 @@ export class TimelineContainer extends React.Component<void, Props, void> {
       itemTimeEndKey: 'end'
     };
 
+    console.log('view starts on ', this.props.timeline.bookendsBeginning);
+    console.log('view ends on ', this.props.timeline.bookendsFinish);
     return (
       <div className='container text-center'>
         <ReactCalendarTimeline
           groups={this.props.timeline.eventGroups}
           items={this.props.timeline.events}
-          keys={ourKeys}/>
+          fixedHeader='fixed'
+          keys={ourKeys}
+          defaultTimeStart={this.props.timeline.bookendsBeginning}
+          defaultTimeEnd={this.props.timeline.bookendsFinish}
+        />
 
-        <button onClick={(e) => this.onAddEvent(e)}>Add Event</button>
+        <button onClick={(e) => this.onAddEvent(e)}>Drop 1 Dragon</button>
         <button>Last Week</button>
-        <button>Next Week</button>
+        <button onClick={(e) => this.onNextWeek(e)}>Next Week</button>
       </div>
     );
   }

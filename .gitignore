@@ -5,3 +5,12 @@ node_modules
 
 dist
 coverage
+.idea/.name
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/copyright/profiles_settings.xml
