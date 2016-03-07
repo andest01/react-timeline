@@ -24,6 +24,7 @@ type Props = {
 // that we can export the undecorated component for testing.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 export class TimelineContainer extends React.Component<void, Props, void> {
+  
   static propTypes = {
     timeline: PropTypes.object.isRequired,
     addTimeline: PropTypes.func.isRequired,
