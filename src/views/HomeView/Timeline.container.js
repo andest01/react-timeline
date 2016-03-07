@@ -1,4 +1,5 @@
 /* @flow */
+/*eslint react/jsx-no-bind: 0*/
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { addTimeline, shiftForward } from '../../redux/modules/timeline.actions';
