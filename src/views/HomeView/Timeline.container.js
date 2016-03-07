@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { addTimeline, shiftForward } from '../../redux/modules/timeline.actions';
 import {default as ReactCalendarTimeline} from 'react-calendar-timeline';
 console.log(ReactCalendarTimeline);
+import '../../styles/timeline-styles.scss';
 // import moment from 'moment';
 // import DuckImage from './Duck.jpg';
 // import classes from './HomeView.scss';

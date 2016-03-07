@@ -1,0 +1,14 @@
+@import './_base.scss';
+
+$work-order-background: $lightgrey2;
+$work-order-opacity: 0.8;
+$work-order-selected-opacity: 1;
+$work-order-inactive-opacity: 0.3;
+$today-background: #FAFAFA;
+$date-border: $lightgrey2;
+
+
+.rct-sidebar {
+  display: none;
+  visibility: hidden;
+}
