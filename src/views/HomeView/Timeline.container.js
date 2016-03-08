@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { addTimeline, shiftForward, shiftBackward } from '../../redux/modules/timeline.actions';
 import {default as ReactCalendarTimeline} from 'react-calendar-timeline';
 import moment from 'moment';
+import '../../styles/timeline-styles.scss';
 // import moment from 'moment';
 // import DuckImage from './Duck.jpg';
 // import classes from './HomeView.scss';
@@ -91,7 +92,7 @@ export class TimelineContainer extends React.Component<void, Props, void> {
     console.log('view starts on ', this.props.timeline.bookendsBeginning.valueOf());
     console.log('view ends on ', this.props.timeline.bookendsFinish.valueOf());
     return (
-      <div>
+      <div className='timelineContainer'>
         <ReactCalendarTimeline
           groups={this.props.timeline.eventGroups}
           items={this.props.timeline.events}
@@ -105,6 +106,7 @@ export class TimelineContainer extends React.Component<void, Props, void> {
         <button onClick={(e) => this.onAddEvent(e)}>Drop 1 Dragon</button>
         <button onClick={(e) => this.onPreviousWeek(e)}>Last Week</button>
         <button onClick={(e) => this.onNextWeek(e)}>Next Week</button>
+        <div className='testGoesHere'>Hello!</div>
       </div>
     );
   }

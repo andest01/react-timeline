@@ -4,11 +4,35 @@ $work-order-background: $lightgrey2;
 $work-order-opacity: 0.8;
 $work-order-selected-opacity: 1;
 $work-order-inactive-opacity: 0.3;
+$work-order-color: $medgrey;
 $today-background: #FAFAFA;
 $date-border: $lightgrey2;
+$timeline-header-color: $medgrey;
 
 
-.rct-sidebar {
+.timelineContainer .react-calendar-timeline .rct-sidebar {
   display: none;
   visibility: hidden;
+}
+
+.timelineContainer .react-calendar-timeline .rct-header{
+
+  .rct-label-group {
+    background-color: $white;
+    color: $timeline-header-color;
+    border-style: none;
+  }
+
+  .rct-label {
+    border-style: 1px solid $date-border;
+    border-top: solid;
+    background-color: $white;
+  }
+}
+
+.timelineContainer .react-calendar-timeline .rct-items .rct-item{
+  background-color: $work-order-background;
+  opacity: $work-order-opacity;
+  color: $work-order-color;
+  border-style: none;
 }
