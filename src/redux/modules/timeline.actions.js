@@ -12,7 +12,7 @@ export const TIMELINE_SHIFT_PREVIOUS_WEEK = 'TIMELINE_SHIFT_PREVIOUS_WEEK';
 
 let makeFakeGroup = (index) => {
   let today = new Date();
-  let tomorrow = addDays(today, 1);
+  let tomorrow = addDays(today, 2);
 
   let dayAfterTomorrow = addDays(tomorrow, 1);
   let dayAfterDayAfterTomorrow = addDays(dayAfterTomorrow, 1);
@@ -31,7 +31,13 @@ let makeFakeGroup = (index) => {
     groupId: index + ''
   };
 
-  return {events: [firstEvent, secondEvent], name: 'name_' + index, id: index + ''};
+  var eventsUsed;
+  if (index % 2 === 0) {
+    eventsUsed = [firstEvent];
+  } else {
+    eventsUsed = [secondEvent];
+  }
+  return {events: eventsUsed, name: 'name_' + index, id: index + ''};
 };
 
 // ------------------------------------
@@ -40,8 +46,8 @@ let makeFakeGroup = (index) => {
 let eventGroups = [makeFakeGroup(1), makeFakeGroup(2), makeFakeGroup(3), makeFakeGroup(4), makeFakeGroup(5)];
 let events = _.flatten(_.map(eventGroups, 'events'), true);
 events.forEach((e, index) => { e.id = index; });
-let firstDay = moment().startOf('day').toDate(); // new Date();?
-let lastDay = moment().endOf('day').add(6, 'days').toDate();
+let firstDay = moment().startOf('day').add(-1, 'day').toDate();
+let lastDay = moment().endOf('day').add(5, 'days').toDate();
 
 const DEFAULT_SETTINGS_STATE = {
   eventGroups: eventGroups,

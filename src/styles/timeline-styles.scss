@@ -1,6 +1,7 @@
 @import './_base.scss';
 
-$work-order-background: $lightgrey2;
+//$work-order-background: $lightgrey2;
+$work-order-background: rgba(230, 230, 230, 0.5);
 $work-order-opacity: 0.8;
 $work-order-selected-opacity: 1;
 $work-order-inactive-opacity: 0.3;
@@ -8,7 +9,7 @@ $work-order-color: $medgrey;
 $today-background: #FAFAFA;
 $date-border: $lightgrey2;
 $timeline-header-color: $medgrey;
-
+$work-order-bubble-size: 30px;
 
 .timelineContainer .react-calendar-timeline .rct-sidebar {
   display: none;
@@ -21,18 +22,73 @@ $timeline-header-color: $medgrey;
     background-color: $white;
     color: $timeline-header-color;
     border-style: none;
+    //font-size: 0.75em;
   }
 
   .rct-label {
-    border-style: 1px solid $date-border;
-    border-top: solid;
+    border-style: none;
+    border-top: 1px solid $date-border;
+    border-bottom: 1px solid $date-border;
     background-color: $white;
+    color: $timeline-header-color;
+    //font-size: 0.75em;
   }
 }
 
 .timelineContainer .react-calendar-timeline .rct-items .rct-item{
+   background-color: $work-order-background;
+   //opacity: $work-order-opacity;
+   color: $work-order-color;
+   border-style: none;
+   border-right: 2px solid $corn;
+   //font-size: 0.5625em;
+   font-size: 10px;
+   display:flex;
+   align-items: center;
+   justify-content: flex-start;
+   overflow: initial;
+   margin-bottom: 40px;
+ }
+.timelineContainer .react-calendar-timeline .rct-items .rct-item.selected{
   background-color: $work-order-background;
-  opacity: $work-order-opacity;
+  //opacity: $work-order-opacity;
   color: $work-order-color;
+  border: 1px solid $corn;
+  border-right: 2px solid $corn;
+  //font-size: 0.5625em;
+  font-size: 10px;
+}
+
+.timelineContainer .react-calendar-timeline .rct-items .rct-item:before {
+  content: '';
+  display: inline-block;
+  height: $work-order-bubble-size;
+  width: $work-order-bubble-size;
+  min-height: $work-order-bubble-size;
+  min-width: $work-order-bubble-size;
   border-style: none;
+  margin-left: -5px;
+  margin-right: 10px;
+  border-radius: 25px;
+  background-color: $white;
+  background-image: url('../styles/planting_corn.svg');
+  background-size: contain;
+}
+
+.timelineContainer .react-calendar-timeline .rct-horizontal-lines .rct-hl-even, .timelineContainer .react-calendar-timeline .rct-horizontal-lines .rct-hl-odd {
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.timelineContainer .react-calendar-timeline .rct-vertical-lines .rct-vl.rct-day-0, .timelineContainer .react-calendar-timeline .rct-vertical-lines .rct-vl.rct-day-6 {
+  background-color: $white;
+}
+
+.timelineContainer .react-calendar-timeline .rct-vertical-lines .rct-vl {
+  border-left: 1px solid $date-border;
+}
+
+.timelineContainer .addEvent, .timelineContainer .previousWeek, .timelineContainer .nextWeek {
+  margin-top: 40px;
+  margin-left: 20px;
 }

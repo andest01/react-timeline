@@ -44,7 +44,7 @@ export class TimelineContainer extends React.Component<void, Props, void> {
     let middleDayOfMay = (new Date(firstDayOfMay)).setDate(14);
 
     let newEvent = {
-      name: 'sillyName',
+      name: 'newEvent',
       groupId: '1',
       start: new Date(firstDayOfMay),
       end: new Date(middleDayOfMay),
@@ -63,7 +63,7 @@ export class TimelineContainer extends React.Component<void, Props, void> {
   };
 
   onTimeChange (visibleTimeStart, visibleTimeEnd) {
-    debugger;
+    // debugger;
     var minTime = moment().add(-6, 'months').valueOf();
     var maxTime = moment().add(6, 'months').valueOf();
 
@@ -101,12 +101,13 @@ export class TimelineContainer extends React.Component<void, Props, void> {
           visibleTimeStart={this.props.timeline.bookendsBeginning.valueOf()}
           visibleTimeEnd={this.props.timeline.bookendsFinish.valueOf()}
           onTimeChange={this.onTimeChange}
+          canMove
+          canResize
         />
 
-        <button onClick={(e) => this.onAddEvent(e)}>Drop 1 Dragon</button>
-        <button onClick={(e) => this.onPreviousWeek(e)}>Last Week</button>
-        <button onClick={(e) => this.onNextWeek(e)}>Next Week</button>
-        <div className='testGoesHere'>Hello!</div>
+        <button className='addEvent' onClick={(e) => this.onAddEvent(e)}>Drop 1 Dragon</button>
+        <button className='previousWeek' onClick={(e) => this.onPreviousWeek(e)}>Last Week</button>
+        <button className='nextWeek' onClick={(e) => this.onNextWeek(e)}>Next Week</button>
       </div>
     );
   }
